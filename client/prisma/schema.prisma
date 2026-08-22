@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum VideoStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}
+
+model User {
+  id           String @id @default(cuid())
+  email        String @unique
+  passwordHash String
+
+  videos Video[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Video {
+  id     String @id @default(cuid())
+  userId String
+
+  youtubeUrl   String
+  duration     Int?
+  status       VideoStatus @default(PENDING)
+  errorMessage String?
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transcript    Transcript?
+  analysis      Analysis?
+  conversations Conversation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Analysis {
+  id      String @id @default(cuid())
+  videoId String @unique
+
+  title         String
+  summary       String
+  actionItems   Json
+  keyDecisions  Json
+  openQuestions Json
+
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Transcript {
+  id       String  @id @default(cuid())
+  videoId  String  @unique
+  content  String
+  language String?
+
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Conversation {
+  id      String  @id @default(cuid())
+  videoId String
+  title   String?
+
+  video    Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([videoId])
+}
+
+model Message {
+  id             String      @id @default(cuid())
+  conversationId String
+  role           MessageRole
+  content        String
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([conversationId])
+}

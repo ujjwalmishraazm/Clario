@@ -1,0 +1,43 @@
+# Node / Next.js
+**/node_modules/
+**/.next/
+**/out/
+**/.vercel/
+
+# Environment / secrets
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Python
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+
+# AI / generated data
+**/downloads/
+**/chroma_langchain_db/
+**/src/generated/prisma/
+
+# Build / tooling
+**/*.tsbuildinfo
+**/coverage/
+
+# Logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/.pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / local AI tooling
+**/.windsurf/
+**/.claude/
+**/.agents/
+
+# Generated/local files
+project-tree.txt

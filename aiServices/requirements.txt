@@ -1,0 +1,26 @@
+# --- Core API framework ---
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+python-multipart==0.0.12
+pydantic==2.9.2
+python-dotenv==1.0.1
+
+# --- Audio ingestion ---
+yt-dlp==2024.11.18          # pulls audio from a YouTube URL
+
+# --- Transcription (speech-to-text) ---
+faster-whisper==1.0.3       # runs locally, no API key/cost
+
+# --- RAG pipeline (LangChain + Mistral + Chroma + HF embeddings) ---
+langchain==0.3.7
+langchain-core==0.3.15
+langchain-community==0.3.5
+langchain-mistralai==0.2.1       # Mistral AI chat model via LangChain (used for LCEL chains)
+langchain-huggingface==0.1.2     # HF Inference API embeddings via LangChain
+chromadb>=1.0.0                  # used directly (NOT via langchain-chroma — that wrapper's version
+                                  # requirements conflict with the langchain-core version above).
+                                  # We call ChromaDB's own client ourselves; still fully compatible
+                                  # with LangChain for everything else (LLM chains, embeddings).
+
+# --- Export feature (transcript/summary -> PDF) ---
+fpdf2==2.7.9
