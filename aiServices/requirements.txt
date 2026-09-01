@@ -11,7 +11,17 @@ pydub        # pulls audio from a YouTube URL
 groq
 # --- Transcription (speech-to-text) ---
 faster-whisper==1.0.3       # runs locally, no API key/cost
-langchain-chroma
+
+# --- Transcription (speech-to-text) ---
+faster-whisper==1.0.3       # runs locally, no API key/cost
+
+# --- RAG pipeline (LangChain + Mistral + Chroma + HF embeddings) ---
+# langchain==0.3.7
+# langchain-core==0.3.15
+# langchain-community==0.3.5
+# langchain-mistralai==0.2.1
+# langchain-huggingface==0.1.2
+# chromadb>=1.0.0
 # --- RAG pipeline (LangChain + Mistral + Chroma + HF embeddings) ---
 langchain==0.3.7
 langchain-core==0.3.15
