@@ -1,5 +1,4 @@
 import { getAuthenticatedUser } from "@/lib/authenticatedUser";
-
 import { prisma } from "@/lib/prisma";
 import { askVideoWithAI } from "@/services/aiservice";
 import { NextRequest, NextResponse } from "next/server";
@@ -19,13 +18,10 @@ export async function POST(
   context: RouteContext,
 ) {
   try {
-
     const user = getAuthenticatedUser(request);
 
-    
     const { id: conversationId } = await context.params;
 
-   
     const body: SendMessageBody = await request.json();
 
     if (!body.question || body.question.trim().length === 0) {
@@ -40,7 +36,6 @@ export async function POST(
 
     const question = body.question.trim();
 
-  
     const conversation = await prisma.conversation.findFirst({
       where: {
         id: conversationId,
@@ -73,7 +68,6 @@ export async function POST(
       );
     }
 
-
     const userMessage = await prisma.message.create({
       data: {
         conversationId,
@@ -82,13 +76,11 @@ export async function POST(
       },
     });
 
-
     const aiResponse = await askVideoWithAI({
       videoId: conversation.video.id,
       question,
     });
 
-    // 8. Save AI response
     const assistantMessage = await prisma.message.create({
       data: {
         conversationId,
@@ -97,7 +89,6 @@ export async function POST(
       },
     });
 
-    // 9. Return both messages
     return NextResponse.json(
       {
         success: true,

@@ -27,6 +27,17 @@ function toStringList(value: unknown): string[] {
   );
 }
 
+function formatTimestamp(seconds: number): string {
+  const totalSeconds = Math.floor(seconds);
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const remainingSeconds = totalSeconds % 60;
+
+  return `${String(minutes).padStart(2, "0")}:${String(
+    remainingSeconds,
+  ).padStart(2, "0")}`;
+}
+
 export function VideoAnalysisWorkspace({
   video,
 }: VideoAnalysisWorkspaceProps) {
@@ -132,7 +143,26 @@ export function VideoAnalysisWorkspace({
         </CardHeader>
 
         <CardContent>
-          {video.transcript?.content ? (
+          {video.transcript?.segments?.length ? (
+            <div className="max-h-[600px] overflow-y-auto rounded-xl border border-border/60 bg-muted/30">
+              <div className="divide-y divide-border/60">
+                {video.transcript.segments.map((segment, index) => (
+                  <div
+                    key={`${segment.start}-${index}`}
+                    className="flex gap-4 p-4"
+                  >
+                    <span className="shrink-0 font-mono text-xs font-medium text-primary">
+                      {formatTimestamp(segment.start)}
+                    </span>
+
+                    <p className="text-sm leading-7 text-muted-foreground">
+                      {segment.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : video.transcript?.content ? (
             <div className="max-h-[600px] overflow-y-auto rounded-xl border border-border/60 bg-muted/30 p-5">
               <p className="whitespace-pre-wrap text-sm leading-7 text-muted-foreground">
                 {video.transcript.content}

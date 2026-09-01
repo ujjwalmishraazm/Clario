@@ -4,8 +4,15 @@ type ProcessVideoInput = {
     language?: "english" | "hinglish";
 };
 
+type TranscriptSegment = {
+    start: number;
+    end: number;
+    text: string;
+};
+
 type ProcessVideoData = {
     transcript: string;
+    segments: TranscriptSegment[];
     summary: string;
     title: string;
     action_items: string[];
@@ -82,4 +89,41 @@ export async function askVideoWithAI(
     const data: AskVideoResponse = await response.json();
 
     return data;
+}
+
+type VideoMetadataResponse = {
+    success: boolean;
+    data: {
+        duration_seconds: number | null;
+        title: string | null;
+        is_live: boolean;
+    };
+};
+
+export async function getVideoMetadata(
+    youtubeUrl: string,
+): Promise<VideoMetadataResponse["data"]> {
+    const url = new URL(`${AI_SERVICE_URL}/video-metadata`);
+
+    url.searchParams.set("youtubeUrl", youtubeUrl);
+
+    const response = await fetch(url.toString(), {
+        method: "GET",
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+
+        throw new Error(
+            `AI service metadata request failed: ${response.status} ${errorMessage}`,
+        );
+    }
+
+    const data: VideoMetadataResponse = await response.json();
+
+    if (!data.success) {
+        throw new Error("Failed to fetch video metadata");
+    }
+
+    return data.data;
 }

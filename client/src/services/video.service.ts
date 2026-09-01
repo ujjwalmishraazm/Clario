@@ -48,3 +48,13 @@ export async function deleteVideo(videoId: string, userId: string) {
         },
     });
 }
+
+export async function getActiveVideoCount(
+    userId: string,
+) {
+    return prisma.video.count({
+        where: {
+            userId,
+        },
+    });
+}

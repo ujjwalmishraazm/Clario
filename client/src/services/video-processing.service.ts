@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { VideoStatus } from "@prisma/client";
 import { processVideoWithAI } from "./aiservice";
 
-
 export async function startVideoProcessing(
     videoId: string,
     userId: string,
@@ -44,7 +43,7 @@ export async function startVideoProcessing(
             language: "english",
         });
 
-        // Save transcript + analysis + final status
+        // Save transcript + timestamps + analysis + final status
         const updatedVideo = await prisma.$transaction(async (tx) => {
             await tx.transcript.upsert({
                 where: {
@@ -53,11 +52,13 @@ export async function startVideoProcessing(
                 update: {
                     content: aiResult.data.transcript,
                     language: "english",
+                    segments: aiResult.data.segments,
                 },
                 create: {
                     videoId: video.id,
                     content: aiResult.data.transcript,
                     language: "english",
+                    segments: aiResult.data.segments,
                 },
             });
 

@@ -6,7 +6,7 @@ pydantic==2.9.2
 python-dotenv==1.0.1
 
 # --- Audio ingestion ---
-yt-dlp==2024.11.18          # pulls audio from a YouTube URL
+yt-dlp==2026.8.19          # pulls audio from a YouTube URL
 
 # --- Transcription (speech-to-text) ---
 faster-whisper==1.0.3       # runs locally, no API key/cost

@@ -70,6 +70,7 @@ model Transcript {
   videoId  String  @unique
   content  String
   language String?
+  segments Json?
 
   video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
 

@@ -24,7 +24,7 @@ export type Conversation = {
       title: string;
     } | null;
   };
-};;
+};
 
 type CreateConversationResponse = {
   success: boolean;
@@ -117,7 +117,6 @@ export async function sendMessage(
 
   return response.data.data;
 }
-
 
 type GetAllConversationsResponse = {
   success: boolean;

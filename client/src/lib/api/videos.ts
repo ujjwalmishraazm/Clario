@@ -34,14 +34,19 @@ export async function getVideos(): Promise<Video[]> {
 };
 
 export type VideoDetail = Video & {
-  transcript: {
-    id: string;
-    videoId: string;
-    content: string;
-    language: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+ transcript: {
+  id: string;
+  videoId: string;
+  content: string;
+  language: string | null;
+  segments: {
+    start: number;
+    end: number;
+    text: string;
+  }[] | null;
+  createdAt: string;
+  updatedAt: string;
+} | null;
 
   analysis: {
     id: string;

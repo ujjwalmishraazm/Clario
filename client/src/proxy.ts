@@ -7,7 +7,7 @@ type JwtPayload = {
 };
 
 export function proxy(request: NextRequest) {
-    console.log("🔥 MIDDLEWARE HIT:", request.nextUrl.pathname);
+  
   try {
     const token = request.cookies.get("token")?.value;
 
