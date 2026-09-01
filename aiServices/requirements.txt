@@ -8,7 +8,7 @@ python-dotenv==1.0.1
 # --- Audio ingestion ---
 yt-dlp==2026.8.19  
 pydub        # pulls audio from a YouTube URL
-
+groq
 # --- Transcription (speech-to-text) ---
 faster-whisper==1.0.3       # runs locally, no API key/cost
 
