@@ -12,23 +12,20 @@ groq
 # --- Transcription (speech-to-text) ---
 faster-whisper==1.0.3       # runs locally, no API key/cost
 
-# --- Transcription (speech-to-text) ---
-faster-whisper==1.0.3       # runs locally, no API key/cost
+       # runs locally, no API key/cost
 
 # --- RAG pipeline (LangChain + Mistral + Chroma + HF embeddings) ---
-# langchain==0.3.7
-# langchain-core==0.3.15
-# langchain-community==0.3.5
-# langchain-mistralai==0.2.1
-# langchain-huggingface==0.1.2
-# chromadb>=1.0.0
+
 # --- RAG pipeline (LangChain + Mistral + Chroma + HF embeddings) ---
+# --- RAG pipeline ---
 langchain==0.3.7
 langchain-core==0.3.15
 langchain-community==0.3.5
-langchain-mistralai==0.2.1       # Mistral AI chat model via LangChain (used for LCEL chains)
-langchain-huggingface==0.1.2     # HF Inference API embeddings via LangChain
-chromadb>=1.0.0                  # used directly (NOT via langchain-chroma — that wrapper's version
+langchain-mistralai==0.2.1
+langchain-huggingface==0.1.2
+langchain-chroma==0.1.4
+chromadb>=0.4.0,<0.6.0
+langchain-text-splitters==0.3.2               # used directly (NOT via langchain-chroma — that wrapper's version
                                   # requirements conflict with the langchain-core version above).
                                   # We call ChromaDB's own client ourselves; still fully compatible
                                   # with LangChain for everything else (LLM chains, embeddings).
